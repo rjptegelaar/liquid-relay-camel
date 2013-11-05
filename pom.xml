@@ -8,16 +8,16 @@
 	<groupId>com.pte.liquid.relay</groupId>
 	<artifactId>liquid-relay-camel</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<name>LiquidRelay</name>
 	<url>http://www.paultegelaar.nl</url>
 
 
 	<scm>
-		<connection>scm:svn:https://liquid-relay-camel.googlecode.com/svn/tags/liquid-relay-camel-0.0.1</connection>
-		<developerConnection>scm:svn:https://liquid-relay-camel.googlecode.com/svn/tags/liquid-relay-camel-0.0.1</developerConnection>
-		<url>https://liquid-relay-camel.googlecode.com/svn/tags/liquid-relay-camel-0.0.1</url>
+		<connection>scm:svn:https://liquid-relay-camel.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://liquid-relay-camel.googlecode.com/svn/trunk/</developerConnection>
+		<url>https://liquid-relay-camel.googlecode.com/svn/trunk/</url>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
