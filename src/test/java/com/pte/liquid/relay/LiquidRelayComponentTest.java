@@ -35,7 +35,7 @@ public class LiquidRelayComponentTest extends CamelTestSupport {
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
             public void configure() {
-                from("liquid://foo")
+                from("timer://foo?repeatCount=1")                 
                   .to("liquid://bar")
                   .to("mock:result");
             }

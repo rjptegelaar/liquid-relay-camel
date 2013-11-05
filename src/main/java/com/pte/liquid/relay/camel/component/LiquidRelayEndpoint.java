@@ -14,35 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pte.liquid.relay;
+package com.pte.liquid.relay.camel.component;
 
-import org.apache.camel.Consumer;
-import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.impl.ProcessorEndpoint;
 
 /**
  * Represents a LiquidRelay endpoint.
  */
-public class LiquidRelayEndpoint extends DefaultEndpoint {
+public class LiquidRelayEndpoint extends ProcessorEndpoint{
 
     public LiquidRelayEndpoint() {
+    	
     }
 
     public LiquidRelayEndpoint(String uri, LiquidRelayComponent component) {
         super(uri, component);
-    }
-
-    public LiquidRelayEndpoint(String endpointUri) {
-        super(endpointUri);
-    }
+    }    
 
     public Producer createProducer() throws Exception {
         return new LiquidRelayProducer(this);
-    }
-
-    public Consumer createConsumer(Processor processor) throws Exception {
-        return new LiquidRelayConsumer(this, processor);
     }
 
     public boolean isSingleton() {

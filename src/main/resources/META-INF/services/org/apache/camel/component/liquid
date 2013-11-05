@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-class=com.pte.liquid.relay.LiquidRelayComponent
+class=com.pte.liquid.relay.camel.component.LiquidRelayComponent

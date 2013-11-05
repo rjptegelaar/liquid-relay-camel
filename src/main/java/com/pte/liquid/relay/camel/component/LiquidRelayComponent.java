@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pte.liquid.relay;
+package com.pte.liquid.relay.camel.component;
 
 import java.util.Map;
 
