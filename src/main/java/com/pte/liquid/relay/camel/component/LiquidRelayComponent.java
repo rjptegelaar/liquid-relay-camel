@@ -19,16 +19,55 @@ package com.pte.liquid.relay.camel.component;
 import java.util.Map;
 
 import org.apache.camel.Endpoint;
+import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.pte.liquid.relay.Converter;
+import com.pte.liquid.relay.Transport;
 
 /**
  * Represents the component that manages {@link LiquidRelayEndpoint}.
  */
 public class LiquidRelayComponent extends DefaultComponent {
 
+    private Transport jmsTransport;
+    private Converter<Exchange> camelConverter;
+	
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Endpoint endpoint = new LiquidRelayEndpoint(uri, this);
+    	ApplicationContext appCtx = new ClassPathXmlApplicationContext("com/pte/liquid/relay/camel/component/application-context.xml");
+    	jmsTransport = (Transport) appCtx.getBean("relayApiJmsTransport");
+        camelConverter = (Converter<Exchange>) appCtx.getBean("relayCamelConverter");
+    	
+        LiquidRelayEndpoint endpoint = new LiquidRelayEndpoint(uri, this);
+        endpoint.setTransport(jmsTransport);
+        endpoint.setCamelConverter(camelConverter);
+        
         setProperties(endpoint, parameters);
+        
+       
+        
+        
+        
         return endpoint;
     }
+
+	public Transport getJmsTransport() {
+		return jmsTransport;
+	}
+
+	public void setJmsTransport(Transport jmsTransport) {
+		this.jmsTransport = jmsTransport;
+	}
+
+	public Converter<Exchange> getCamelConverter() {
+		return camelConverter;
+	}
+
+	public void setCamelConverter(Converter<Exchange> camelConverter) {
+		this.camelConverter = camelConverter;
+	}
+    
+    
 }

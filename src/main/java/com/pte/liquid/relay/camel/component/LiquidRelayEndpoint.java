@@ -16,27 +16,73 @@
  */
 package com.pte.liquid.relay.camel.component;
 
+import org.apache.camel.Consumer;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.ProcessorEndpoint;
+import org.apache.camel.impl.DefaultEndpoint;
+
+import com.pte.liquid.relay.Converter;
+import com.pte.liquid.relay.Transport;
+import com.pte.liquid.relay.client.jms.JmsTransport;
 
 /**
  * Represents a LiquidRelay endpoint.
  */
-public class LiquidRelayEndpoint extends ProcessorEndpoint{
+public class LiquidRelayEndpoint extends DefaultEndpoint{
 
-    public LiquidRelayEndpoint() {
-    	
-    }
+    private Transport transport;
+    private Converter<Exchange> camelConverter;
+	
 
     public LiquidRelayEndpoint(String uri, LiquidRelayComponent component) {
-        super(uri, component);
+    	 super(uri, component);
+    }
+
+    
+    public LiquidRelayEndpoint(String endpointUri) {
+    	super(endpointUri);
     }    
 
     public Producer createProducer() throws Exception {
-        return new LiquidRelayProducer(this);
+        return new LiquidRelayProducer(this, transport, camelConverter);
     }
 
     public boolean isSingleton() {
         return true;
     }
+  
+
+
+
+    public Consumer createConsumer(Processor processor) throws Exception {
+        return new LiquidRelayConsumer(this, processor);
+    }
+
+
+	public Transport getTransport() {
+		return transport;
+	}
+
+
+	public void setTransport(Transport transport) {
+		this.transport = transport;
+	}
+
+
+	public Converter<Exchange> getCamelConverter() {
+		return camelConverter;
+	}
+
+
+	public void setCamelConverter(Converter<Exchange> camelConverter) {
+		this.camelConverter = camelConverter;
+	}
+
+
+
+
+    
+
+    
 }

@@ -116,26 +116,20 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
-		<!-- LIQUID -->
-  		<dependency>
+		<!-- LIQUID -->		
+		 <dependency>
 			<groupId>com.pte.liquid</groupId>
 			<artifactId>RelayInterfaces</artifactId>
-			<version>0.0.8</version>
+			<version>0.1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/RelayInterfaces-0.0.8.jar</systemPath>
+			<systemPath>${project.basedir}/lib/RelayInterfaces-0.1.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.pte.liquid</groupId>
 			<artifactId>RelayApi</artifactId>
-			<version>0.0.4</version>
+			<version>0.0.6</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/RelayApi-0.0.4.jar</systemPath>
-			<exclusions>
-				<exclusion>
-					<artifactId>RelayInterfaces</artifactId>
-					<groupId>com.pte.liquid</groupId>
-				</exclusion>
-			</exclusions>
+			<systemPath>${project.basedir}/lib/RelayApi-0.0.6.jar</systemPath>
 		</dependency>
 	</dependencies>
 

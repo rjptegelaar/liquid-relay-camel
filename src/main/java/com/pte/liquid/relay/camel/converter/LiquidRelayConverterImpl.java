@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
-import com.pte.liquid.relay.camel.component.LiquidRelayProducer;
 import com.pte.liquid.relay.exception.RelayException;
 import com.pte.liquid.relay.model.Message;
 
@@ -37,15 +36,14 @@ public class LiquidRelayConverterImpl implements Converter<Exchange>{
 	
 	@Override
 	public Message convert(Exchange exchange) throws RelayException {		
-		LOG.info("HALLO1");
 		return convert(exchange);
 	}
 	
-	private Message convertExchange(Exchange exchange){		
-		LOG.info("HALLO");
+	private Message convertExchange(Exchange exchange){				
 		Message newMsg = new Message();
-								
-		/*newMsg.setSnapshotTime(new Date());
+		LOG.info("Test");
+			/*					
+		newMsg.setSnapshotTime(new Date());
 		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getExchangeId(), Constants.LOCATION_SEPERATOR));
 				
 		Map<String, Object> exchangeProperties = exchange.getProperties();
