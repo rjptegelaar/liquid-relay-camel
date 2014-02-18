@@ -33,16 +33,20 @@ import com.pte.liquid.relay.model.Message;
 public class LiquidRelayConverterImpl implements Converter<Exchange>{
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(LiquidRelayConverterImpl.class);
+	private final static String PARENT_ID_PROPERTY_NAME = "liquid_parent_id";
+	private final static String ORDER_PROPERTY_NAME = "liquid_message_order";
+	private final static String ESB_TYPE_PROPERTY_NAME = "liquid_esb_type";
+	private final static String ESB_TYPE_PROPERTY_VALUE = "APACHE_CAMEL";
+	
 	
 	@Override
 	public Message convert(Exchange exchange) throws RelayException {		
-		return convert(exchange);
+		return convertExchange(exchange);
 	}
 	
-	private Message convertExchange(Exchange exchange){				
+	private Message convertExchange(Exchange exchange){			
 		Message newMsg = new Message();
-		LOG.info("Test");
-			/*					
+						
 		newMsg.setSnapshotTime(new Date());
 		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getExchangeId(), Constants.LOCATION_SEPERATOR));
 				
@@ -69,7 +73,8 @@ public class LiquidRelayConverterImpl implements Converter<Exchange>{
 		
 		if(exchange.getIn().getBody(String.class)!=null){
 			newMsg.createPart("EXCHANGE_IN", exchange.getIn().getBody(String.class));	
-		}*/
+		}
+		LOG.info("test");
 		return newMsg;
 	}
 	

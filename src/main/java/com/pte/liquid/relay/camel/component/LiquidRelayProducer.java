@@ -36,6 +36,7 @@ public class LiquidRelayProducer extends DefaultProducer {
     	String correlationID = exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class);
     	String bcID = exchange.getIn().getHeader("breadcrumbId", String.class);
     	LOG.info("Preconvert");	
+    	
     	Message msg = camelConverter.convert(exchange);  
     	LOG.info("Created message");
     	if(correlationID!=null && !"".equals(correlationID)){
