@@ -48,8 +48,7 @@ public class LiquidRelayConverterImpl implements Converter<Exchange>{
 		Message newMsg = new Message();
 						
 		newMsg.setSnapshotTime(new Date());
-		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getExchangeId(), Constants.LOCATION_SEPERATOR));
-				
+		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getFromEndpoint().getEndpointKey(), exchange.getContext().getName(), Constants.LOCATION_SEPERATOR));		
 		Map<String, Object> exchangeProperties = exchange.getProperties();
 		if(exchangeProperties!=null){
 					
@@ -74,17 +73,19 @@ public class LiquidRelayConverterImpl implements Converter<Exchange>{
 		if(exchange.getIn().getBody(String.class)!=null){
 			newMsg.createPart("EXCHANGE_IN", exchange.getIn().getBody(String.class));	
 		}
-		LOG.info("test");
+		
 		return newMsg;
 	}
 	
-	private String createLocationName(String fromRouteID, String fromEndPointID, String locationSeperator){
+	private String createLocationName(String fromRouteID, String fromEndPointID, String contextName, String locationSeperator){
 				
 		StringBuffer sb = new StringBuffer();
 		
 		sb.append(fromRouteID);
 		sb.append(locationSeperator);
-		sb.append(fromEndPointID);		
+		sb.append(fromEndPointID);
+		sb.append(locationSeperator);
+		sb.append(contextName);
 		
 		return sb.toString();
 	}

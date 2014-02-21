@@ -8,7 +8,7 @@
 	<groupId>com.pte.liquid.relay</groupId>
 	<artifactId>liquid-relay-camel</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 
 	<name>liquid-relay-camel</name>
 	<url>http://www.paultegelaar.nl</url>
@@ -88,34 +88,21 @@
 			<version>1.2.16</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- APACHE -->
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-all</artifactId>
-			<version>${activemq.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xbean</groupId>
-			<artifactId>xbean-spring</artifactId>
-			<version>${xbean.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.3.2</version>
-		</dependency>
+		
 		<!-- SPRING -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
+		<!-- GOZIRRA -->
+		<dependency>
+  			<groupId>net.ser1.stomp</groupId>
+  			<artifactId>gozirra</artifactId>
+  			<version>0.4.1</version>
+		</dependency>
+
 		<!-- LIQUID -->		
 		 <dependency>
 			<groupId>com.pte.liquid</groupId>
@@ -127,15 +114,9 @@
 		<dependency>
 			<groupId>com.pte.liquid</groupId>
 			<artifactId>RelayApi</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/RelayApi-0.0.6.jar</systemPath>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.activemq</groupId>
-					<artifactId>activemq-all</artifactId>
-				</exclusion>
-			</exclusions>
+			<systemPath>${project.basedir}/lib/RelayApi-0.0.7.jar</systemPath>
 		</dependency>
 	</dependencies>
 

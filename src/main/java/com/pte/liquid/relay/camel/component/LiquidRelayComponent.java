@@ -32,16 +32,16 @@ import com.pte.liquid.relay.Transport;
  */
 public class LiquidRelayComponent extends DefaultComponent {
 
-    private Transport jmsTransport;
+    private Transport stompTransport;
     private Converter<Exchange> camelConverter;
 	
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
     	ApplicationContext appCtx = new ClassPathXmlApplicationContext("com/pte/liquid/relay/camel/component/application-context.xml");
-    	jmsTransport = (Transport) appCtx.getBean("relayApiJmsTransport");
+    	stompTransport = (Transport) appCtx.getBean("relayApiStompTransport");
         camelConverter = (Converter<Exchange>) appCtx.getBean("relayCamelConverter");
     	
         LiquidRelayEndpoint endpoint = new LiquidRelayEndpoint(uri, this);
-        endpoint.setTransport(jmsTransport);
+        endpoint.setTransport(stompTransport);
         endpoint.setCamelConverter(camelConverter);
         
         setProperties(endpoint, parameters);
@@ -53,13 +53,19 @@ public class LiquidRelayComponent extends DefaultComponent {
         return endpoint;
     }
 
-	public Transport getJmsTransport() {
-		return jmsTransport;
+
+
+	public Transport getStompTransport() {
+		return stompTransport;
 	}
 
-	public void setJmsTransport(Transport jmsTransport) {
-		this.jmsTransport = jmsTransport;
+
+
+	public void setStompTransport(Transport stompTransport) {
+		this.stompTransport = stompTransport;
 	}
+
+
 
 	public Converter<Exchange> getCamelConverter() {
 		return camelConverter;
