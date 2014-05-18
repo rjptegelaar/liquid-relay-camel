@@ -30,14 +30,14 @@ import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.exception.RelayException;
 import com.pte.liquid.relay.model.Message;
 
-public class LiquidRelayConverterImpl implements Converter<Exchange>{
+public class LiquidRelayExchangeConverterImpl implements Converter<Exchange>{
 
-	private static final transient Logger LOG = LoggerFactory.getLogger(LiquidRelayConverterImpl.class);
-	private final static String PARENT_ID_PROPERTY_NAME = "liquid_parent_id";
-	private final static String ORDER_PROPERTY_NAME = "liquid_message_order";
-	private final static String ESB_TYPE_PROPERTY_NAME = "liquid_esb_type";
+	private static final transient Logger LOG = LoggerFactory.getLogger(LiquidRelayExchangeConverterImpl.class);
+
 	private final static String ESB_TYPE_PROPERTY_VALUE = "APACHE_CAMEL";
 	
+	
+	//CamelCorrelationId
 	
 	@Override
 	public Message convert(Exchange exchange) throws RelayException {		
@@ -46,7 +46,10 @@ public class LiquidRelayConverterImpl implements Converter<Exchange>{
 	
 	private Message convertExchange(Exchange exchange){			
 		Message newMsg = new Message();
-						
+
+		exchange.getFromEndpoint().getEndpointUri();
+		
+		
 		newMsg.setSnapshotTime(new Date());
 		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getFromEndpoint().getEndpointKey(), exchange.getContext().getName(), Constants.LOCATION_SEPERATOR));		
 		Map<String, Object> exchangeProperties = exchange.getProperties();

@@ -6,5 +6,5 @@
 	<import resource="classpath:com/pte/liquid/relay/client/stomp-application-context.xml"/>
 	
 	
-	<bean id="relayCamelConverter" class="com.pte.liquid.relay.camel.converter.LiquidRelayExchangeConverterImpl"/>	
+	<bean id="relayCamelConverter" class="com.pte.liquid.relay.camel.converter.LiquidRelayTraceEventMessageConverterImpl"/>	
 </beans>
