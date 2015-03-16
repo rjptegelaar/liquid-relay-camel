@@ -1,0 +1,1 @@
+Apache Camel component used to communicate with LiquidRelay
