@@ -33,39 +33,81 @@ public class LiquidRelayProducer extends DefaultProducer {
     private static final transient Logger LOG = LoggerFactory.getLogger(LiquidRelayProducer.class);
     private LiquidRelayEndpoint endpoint;
     private Transport transport;
-    private Converter<Exchange> camelConverter;
+    private Converter<Exchange> converter;
     
-    public LiquidRelayProducer(LiquidRelayEndpoint endpoint, Transport transport, Converter<Exchange> camelConverter) {
+    public LiquidRelayProducer(LiquidRelayEndpoint endpoint, Transport transport, Converter<Exchange> converter) {
         super(endpoint);               
-        this.camelConverter = camelConverter;
+        this.converter = converter;
         this.transport = transport;
         this.endpoint = endpoint;
     }
 
     public void process(Exchange exchange) throws Exception {
     	LOG.info("Start send");
+    	Message preMsg = converter.convert(exchange);  
+    	String correlationID = determineCorrelation(exchange);
+    	String parentId = determineParent(exchange);
+    	int order = determineOrder(exchange);
     	
-    	String correlationID = exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class);
-    	String bcID = exchange.getIn().getHeader("breadcrumbId", String.class);
+    	setCorrelationID(correlationID, exchange);
+    	preMsg.setCorrelationID(correlationID);
     	
-    	LOG.info("Preconvert");	
+    	setParentID(parentId, exchange);
+    	preMsg.setParentID(parentId);
     	
-    	Message msg = camelConverter.convert(exchange);  
-    	LOG.info("Created message");
-    	if(correlationID!=null && !"".equals(correlationID)){
-    		msg.setCorrelationID(correlationID);	
-    	}else if(bcID!=null && !"".equals(bcID)){
-    		msg.setCorrelationID(bcID);
-    		exchange.getIn().setHeader(Constants.CORRELATION_ID_PROPERTY_NAME, bcID);
-    	}else{
-    		String newID = UUID.randomUUID().toString();
-    		msg.setCorrelationID(newID);
-    		exchange.getIn().setHeader(Constants.CORRELATION_ID_PROPERTY_NAME, newID);    		
-    	}
-    	LOG.info("Set corid");    	    	    	    	  	   
-    	transport.send(msg);    	
+    	setOrder(order, exchange);
+    	preMsg.setOrder(order);
+    	
+    	LOG.info(preMsg.toString());	
+    	
+    	   	    	    	    	  	   
+    	transport.send(preMsg);    	
     	
     	LOG.info("End send");    
     }
+    
+    private String determineCorrelation(Exchange exchange){
+		String correlationId = "";	
+		if(exchange!=null){
+			if(exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class)!=null){
+				correlationId = exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class);
+			} else {
+				correlationId = UUID.randomUUID().toString();
+			}
+		}	
+		return correlationId;
+	}
+	
+	private int determineOrder(Exchange exchange){
+		int order = 0;	
+		if(exchange!=null){
+			if(exchange.getIn().getHeader(Constants.ORDER_PROPERTY_NAME, Integer.class)!=null){
+				order = exchange.getIn().getHeader(Constants.ORDER_PROPERTY_NAME, Integer.class);
+			}			
+		}	
+		return order;
+	}
+	
+	private String determineParent(Exchange exchange){
+		String parentID = "";	
+		if(exchange!=null){
+			if(exchange.getIn().getHeader(Constants.PARENT_ID_PROPERTY_NAME, String.class)!=null){
+				parentID = exchange.getIn().getHeader(Constants.PARENT_ID_PROPERTY_NAME, String.class);
+			}			
+		}	
+		return parentID;
+	}
+	
+	private void setCorrelationID(String correlationID, Exchange exchange){		
+		exchange.getIn().setHeader(Constants.CORRELATION_ID_PROPERTY_NAME, correlationID);		
+	}
+	
+	private void setOrder(int order, Exchange exchange){		
+		exchange.getIn().setHeader(Constants.ORDER_PROPERTY_NAME, order + 1);		
+	}
+	
+	private void setParentID(String parentID,Exchange exchange){		
+		exchange.getIn().setHeader(Constants.PARENT_ID_PROPERTY_NAME, parentID);		
+	}
 
 }

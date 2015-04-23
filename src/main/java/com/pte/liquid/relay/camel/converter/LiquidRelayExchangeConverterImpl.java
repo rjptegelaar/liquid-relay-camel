@@ -14,10 +14,12 @@
 package com.pte.liquid.relay.camel.converter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.MessageHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,52 +44,61 @@ public class LiquidRelayExchangeConverterImpl implements Converter<Exchange>{
 	
 	private Message convertExchange(Exchange exchange){			
 		Message newMsg = new Message();
-
-		exchange.getFromEndpoint().getEndpointUri();
-		
-		
-		newMsg.setSnapshotTime(new Date());
-		newMsg.setLocation(createLocationName(exchange.getFromRouteId(), exchange.getFromEndpoint().getEndpointKey(), exchange.getContext().getName(), Constants.LOCATION_SEPERATOR));		
-		Map<String, Object> exchangeProperties = exchange.getProperties();
-		if(exchangeProperties!=null){
-					
-			Set<String> propNames = exchangeProperties.keySet();
-					
-			for (String propName : propNames) {			
-				newMsg.setHeader(propName, exchange.getProperty(propName, String.class));				
-			}		
-		}
-											
-		Map<String, Object> exchangeHeaders = exchange.getIn().getHeaders();
-		
-		if(exchangeHeaders!=null){
-		
-			Set<String> headerNames = exchangeHeaders.keySet();
+		newMsg.setSystemHeader(Constants.ESB_TYPE_PROPERTY_NAME, ESB_TYPE_PROPERTY_VALUE);
+		if(exchange!=null){
 			
-			for (String headerName : headerNames) {		
-				newMsg.setHeader(headerName, exchange.getIn().getHeader(headerName, String.class));
-			}		
-		}
-		
-		if(exchange.getIn().getBody(String.class)!=null){
-			newMsg.createPart("EXCHANGE_IN", exchange.getIn().getBody(String.class));	
+			
+			
+			//Get message history from message
+			List<MessageHistory> list = exchange.getProperty(Exchange.MESSAGE_HISTORY, List.class);
+			if(list!=null && list.size()>=2){
+				MessageHistory currentStep = list.get(list.size()-2);		
+				String label = currentStep.getNode().getLabel();
+				String routeID = exchange.getFromRouteId();
+				String contextName = exchange.getContext().getName();
+				String location = createLocationName(routeID, label, contextName, Constants.LOCATION_SEPERATOR);
+				newMsg.setLocation(location);
+				
+			}
+			
+			//Set intercept time
+			newMsg.setSnapshotTime(new Date());
+			
+			//Set headers
+			Map<String, Object> exchangeHeaders = exchange.getIn().getHeaders();
+			
+			if(exchangeHeaders!=null){
+			
+				Set<String> headerNames = exchangeHeaders.keySet();
+				
+				for (String headerName : headerNames) {		
+					newMsg.setHeader(headerName, exchange.getIn().getHeader(headerName, String.class));
+				}		
+			}
+						
+			//Set body
+			if(exchange.getIn().getBody(String.class)!=null){
+				newMsg.createPart("EXCHANGE_IN", exchange.getIn().getBody(String.class));	
+			}
 		}
 		
 		return newMsg;
 	}
 	
-	private String createLocationName(String fromRouteID, String fromEndPointID, String contextName, String locationSeperator){
+	private String createLocationName(String routeID, String label, String contextName, String locationSeperator){
 				
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append(fromRouteID);
-		sb.append(locationSeperator);
-		sb.append(fromEndPointID);
-		sb.append(locationSeperator);
 		sb.append(contextName);
+		sb.append(locationSeperator);
+		sb.append(routeID);
+		sb.append(locationSeperator);
+		sb.append(label);
 		
 		return sb.toString();
 	}
+	
+	
 	
 
 }
