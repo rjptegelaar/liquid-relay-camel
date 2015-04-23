@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
-import com.pte.liquid.relay.client.jms.JmsTransport;
 import com.pte.liquid.relay.model.Message;
 
 /**
@@ -43,27 +42,23 @@ public class LiquidRelayProducer extends DefaultProducer {
     }
 
     public void process(Exchange exchange) throws Exception {
-    	LOG.info("Start send");
     	Message preMsg = converter.convert(exchange);  
     	String correlationID = determineCorrelation(exchange);
     	String parentId = determineParent(exchange);
     	int order = determineOrder(exchange);
+    	String messageID = preMsg.getId();
     	
     	setCorrelationID(correlationID, exchange);
     	preMsg.setCorrelationID(correlationID);
     	
-    	setParentID(parentId, exchange);
+    	setParentID(messageID, exchange);
     	preMsg.setParentID(parentId);
     	
     	setOrder(order, exchange);
-    	preMsg.setOrder(order);
-    	
-    	LOG.info(preMsg.toString());	
+    	preMsg.setOrder(order);	
     	
     	   	    	    	    	  	   
-    	transport.send(preMsg);    	
-    	
-    	LOG.info("End send");    
+    	transport.send(preMsg);    	  
     }
     
     private String determineCorrelation(Exchange exchange){

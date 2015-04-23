@@ -62,8 +62,9 @@ public class LiquidRelayExchangeConverterImpl implements Converter<Exchange>{
 			}
 			
 			//Set intercept time
-			newMsg.setSnapshotTime(new Date());
-			
+			Date now = new Date();
+			newMsg.setSnapshotTime(now);
+			newMsg.setSnapshotTimeMillis(now.getTime());
 			//Set headers
 			Map<String, Object> exchangeHeaders = exchange.getIn().getHeaders();
 			

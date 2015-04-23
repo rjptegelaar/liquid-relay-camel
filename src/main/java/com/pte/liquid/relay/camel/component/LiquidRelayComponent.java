@@ -30,6 +30,7 @@ import com.pte.liquid.relay.Transport;
 public class LiquidRelayComponent extends DefaultComponent {
 
     private Transport stompTransport;
+	
     private Converter<Exchange> camelConverter;
 	
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {

@@ -13,9 +13,6 @@
 //limitations under the License.
 package com.pte.liquid.relay.camel.component;
 
-import java.util.Date;
-
-import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 

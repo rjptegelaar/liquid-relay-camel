@@ -21,7 +21,6 @@ import org.apache.camel.impl.DefaultEndpoint;
 
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
-import com.pte.liquid.relay.client.jms.JmsTransport;
 
 /**
  * Represents a LiquidRelay endpoint.
@@ -35,11 +34,6 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
     public LiquidRelayEndpoint(String uri, LiquidRelayComponent component) {
     	 super(uri, component);
     }
-
-    
-    public LiquidRelayEndpoint(String endpointUri) {
-    	super(endpointUri);
-    }    
 
     public Producer createProducer() throws Exception {
         return new LiquidRelayProducer(this, transport, camelConverter);
