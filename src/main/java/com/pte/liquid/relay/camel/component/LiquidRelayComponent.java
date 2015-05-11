@@ -28,50 +28,12 @@ import com.pte.liquid.relay.Transport;
  * Represents the component that manages {@link LiquidRelayEndpoint}.
  */
 public class LiquidRelayComponent extends DefaultComponent {
-
-    private Transport stompTransport;
-	
-    private Converter<Exchange> camelConverter;
 	
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-    	ApplicationContext appCtx = new ClassPathXmlApplicationContext("com/pte/liquid/relay/camel/component/application-context.xml");
-    	stompTransport = (Transport) appCtx.getBean("relayApiStompTransport");
-        camelConverter = (Converter<Exchange>) appCtx.getBean("relayCamelConverter");
-    	
-        LiquidRelayEndpoint endpoint = new LiquidRelayEndpoint(uri, this);
-        endpoint.setTransport(stompTransport);
-        endpoint.setCamelConverter(camelConverter);
-        
-        setProperties(endpoint, parameters);
-        
-       
-        
-        
+        LiquidRelayEndpoint endpoint = new LiquidRelayEndpoint(uri, this);        
+        setProperties(endpoint, parameters);  
         
         return endpoint;
-    }
-
-
-
-	public Transport getStompTransport() {
-		return stompTransport;
-	}
-
-
-
-	public void setStompTransport(Transport stompTransport) {
-		this.stompTransport = stompTransport;
-	}
-
-
-
-	public Converter<Exchange> getCamelConverter() {
-		return camelConverter;
-	}
-
-	public void setCamelConverter(Converter<Exchange> camelConverter) {
-		this.camelConverter = camelConverter;
-	}
-    
+    }    
     
 }

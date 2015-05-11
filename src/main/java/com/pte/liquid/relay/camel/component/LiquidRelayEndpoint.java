@@ -13,11 +13,15 @@
 //limitations under the License.
 package com.pte.liquid.relay.camel.component;
 
+import java.util.Properties;
+
 import org.apache.camel.Consumer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
@@ -29,13 +33,38 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
 
     private Transport transport;
     private Converter<Exchange> camelConverter;
-	
+    private String destination;
+    private String hostname;
+    private String port;
+       
 
     public LiquidRelayEndpoint(String uri, LiquidRelayComponent component) {
-    	 super(uri, component);
+    	super(uri, component);
+
     }
 
     public Producer createProducer() throws Exception {
+
+        Properties properties = new Properties();
+        
+        if(destination!=null){
+        	properties.put("relay_destination", destination);
+        }
+        if(hostname!=null){
+        	properties.put("relay_stomp_hostname", hostname);
+        }
+        if(port!=null){
+        	properties.put("relay_stomp_port", port);
+        }
+
+    	ApplicationContext appCtx = new ClassPathXmlApplicationContext("com/pte/liquid/relay/camel/component/application-context.xml");
+
+     	transport = (Transport) appCtx.getBean("relayApiStompTransport");     	     	
+     	transport.setProperties(properties);   
+        camelConverter = (Converter<Exchange>) appCtx.getBean("relayCamelConverter");        
+        
+        
+        
         return new LiquidRelayProducer(this, transport, camelConverter);
     }
 
@@ -70,6 +99,31 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
 		this.camelConverter = camelConverter;
 	}
 
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {				
+		this.destination = destination;
+	}
+
+	public String getHostname() {
+		return hostname;
+	}
+
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	
 
 
 

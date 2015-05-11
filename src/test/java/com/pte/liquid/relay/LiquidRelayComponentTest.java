@@ -36,7 +36,7 @@ public class LiquidRelayComponentTest extends CamelTestSupport {
         return new RouteBuilder() {
             public void configure() {
                 from("timer://foo?repeatCount=3").setBody().constant("Hallo")
-                  .to("liquid://bar")
+                  .to("liquid://?destination=com.pte.liquid.relay.json.in&hostname=localhost&port=33555")
                   .to("mock:result");
             }
         };

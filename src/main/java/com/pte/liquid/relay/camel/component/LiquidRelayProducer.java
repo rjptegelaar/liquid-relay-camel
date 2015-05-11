@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
+import com.pte.liquid.relay.exception.RelayException;
 import com.pte.liquid.relay.model.Message;
 
 /**
@@ -42,23 +43,27 @@ public class LiquidRelayProducer extends DefaultProducer {
     }
 
     public void process(Exchange exchange) throws Exception {
-    	Message preMsg = converter.convert(exchange);  
-    	String correlationID = determineCorrelation(exchange);
-    	String parentId = determineParent(exchange);
-    	int order = determineOrder(exchange);
-    	String messageID = preMsg.getId();
-    	
-    	setCorrelationID(correlationID, exchange);
-    	preMsg.setCorrelationID(correlationID);
-    	
-    	setParentID(messageID, exchange);
-    	preMsg.setParentID(parentId);
-    	
-    	setOrder(order, exchange);
-    	preMsg.setOrder(order);	
-    	
-    	   	    	    	    	  	   
-    	transport.send(preMsg);    	  
+    	try{
+        	Message preMsg = converter.convert(exchange);  
+        	String correlationID = determineCorrelation(exchange);
+        	String parentId = determineParent(exchange);
+        	int order = determineOrder(exchange);
+        	String messageID = preMsg.getId();
+        	
+        	setCorrelationID(correlationID, exchange);
+        	preMsg.setCorrelationID(correlationID);
+        	
+        	setParentID(messageID, exchange);
+        	preMsg.setParentID(parentId);
+        	
+        	setOrder(order, exchange);
+        	preMsg.setOrder(order);	
+        	
+        	   	    	    	    	  	   
+        	transport.send(preMsg);    	      		
+    	} catch (Exception e) {
+			//Empty by design
+		}
     }
     
     private String determineCorrelation(Exchange exchange){
