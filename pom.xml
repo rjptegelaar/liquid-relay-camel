@@ -4,14 +4,14 @@
 	<groupId>com.pte.liquid.relay</groupId>
 	<artifactId>liquid-relay-camel</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<name>liquid-relay-camel</name>
 	<url>http://www.paultegelaar.nl</url>
 	<scm>
 		<connection>scm:git:https://github.com/rjptegelaar/liquid-relay-camel</connection>
 		<developerConnection>scm:git:git@github.com:rjptegelaar/liquid-relay-camel</developerConnection>
 		<url>https://github.com/rjptegelaar/liquid-relay-camel.git</url>
-	  <tag>HEAD</tag>
+	  <tag>liquid-relay-camel-0.0.5</tag>
   </scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
