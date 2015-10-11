@@ -44,7 +44,7 @@ public class LiquidRelayExchangeConverterImpl implements Converter<Exchange>{
 	
 	private Message convertExchange(Exchange exchange){			
 		Message newMsg = new Message();
-		newMsg.setSystemHeader(Constants.ESB_TYPE_PROPERTY_NAME, ESB_TYPE_PROPERTY_VALUE);
+		newMsg.setHeader(Constants.ESB_TYPE_PROPERTY_NAME, ESB_TYPE_PROPERTY_VALUE);
 		if(exchange!=null){
 			
 			

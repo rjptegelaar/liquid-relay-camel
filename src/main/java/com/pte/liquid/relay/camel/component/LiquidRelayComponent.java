@@ -16,13 +16,7 @@ package com.pte.liquid.relay.camel.component;
 import java.util.Map;
 
 import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.pte.liquid.relay.Converter;
-import com.pte.liquid.relay.Transport;
 
 /**
  * Represents the component that manages {@link LiquidRelayEndpoint}.
