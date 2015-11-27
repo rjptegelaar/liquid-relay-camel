@@ -82,7 +82,6 @@ public class LiquidRelayExchangeConverterImpl implements Converter<Exchange>{
 				newMsg.createPart("EXCHANGE_IN", exchange.getIn().getBody(String.class));	
 			}
 		}
-		System.out.println(newMsg.toString());
 		return newMsg;
 	}
 	
