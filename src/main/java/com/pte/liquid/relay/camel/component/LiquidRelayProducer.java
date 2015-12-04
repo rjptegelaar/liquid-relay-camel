@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
-import com.pte.liquid.relay.exception.RelayException;
 import com.pte.liquid.relay.model.Message;
 
 /**

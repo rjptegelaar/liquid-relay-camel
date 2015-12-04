@@ -16,9 +16,6 @@ package com.pte.liquid.relay.camel.component;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 
-/**
- * The HelloWorld consumer.
- */
 public class LiquidRelayConsumer extends DefaultConsumer {
     private final LiquidRelayEndpoint endpoint;
 
