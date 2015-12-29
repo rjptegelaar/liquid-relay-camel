@@ -1,4 +1,4 @@
-//Copyright 2014 Paul Tegelaar
+//Copyright 2015 Paul Tegelaar
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -33,33 +33,42 @@ public class LiquidRelayProducer extends DefaultProducer {
     private LiquidRelayEndpoint endpoint;
     private Transport transport;
     private Converter<Exchange> converter;
+    private boolean enabled;
     
-    public LiquidRelayProducer(LiquidRelayEndpoint endpoint, Transport transport, Converter<Exchange> converter) {
+    public LiquidRelayProducer(LiquidRelayEndpoint endpoint, Transport transport, Converter<Exchange> converter, boolean enabled) {
         super(endpoint);               
         this.converter = converter;
         this.transport = transport;
         this.endpoint = endpoint;
+        this.enabled = enabled;
     }
 
     public void process(Exchange exchange) throws Exception {
     	try{
-        	Message preMsg = converter.convert(exchange);  
-        	String correlationID = determineCorrelation(exchange);
-        	String parentId = determineParent(exchange);
-        	int order = determineOrder(exchange);
-        	String messageID = preMsg.getId();
-        	
-        	setCorrelationID(correlationID, exchange);
-        	preMsg.setCorrelationID(correlationID);
-        	
-        	setParentID(messageID, exchange);
-        	preMsg.setParentID(parentId);
-        	
-        	setOrder(order, exchange);
-        	preMsg.setOrder(order);	
-        	
-        	   	    	    	    	  	   
-        	transport.send(preMsg);    	      		
+    		if(enabled){
+    			    		
+	        	Message preMsg = converter.convert(exchange);  
+	        	String correlationID = determineCorrelation(exchange);
+	        	String parentId = determineParent(exchange);
+	        	int order = determineOrder(exchange);
+	        	String messageID = preMsg.getId();
+	        	
+	        	setCorrelationID(correlationID, exchange);
+	        	preMsg.setCorrelationID(correlationID);
+	        	
+	        	setParentID(messageID, exchange);
+	        	preMsg.setParentID(parentId);
+	        	
+	        	setOrder(order, exchange);
+	        	preMsg.setOrder(order);	
+	        	
+	        	   	    	    	    	  	   
+	        	transport.send(preMsg);
+    		}else{
+    			if(log.isDebugEnabled()){
+    				log.debug("Skipping message because liquid is disabled");
+    			}
+    		}
     	} catch (Exception e) {
 			//Empty by design
 		}

@@ -5,7 +5,7 @@
 	<groupId>com.pte.liquid.relay</groupId>
 	<artifactId>liquid-relay-camel</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<name>liquid-relay-camel</name>
 	<url>http://www.paultegelaar.nl</url>
 	<parent>

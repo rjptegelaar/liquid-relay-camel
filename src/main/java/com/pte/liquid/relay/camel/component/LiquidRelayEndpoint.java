@@ -1,4 +1,4 @@
-//Copyright 2014 Paul Tegelaar
+//Copyright 2015 Paul Tegelaar
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
     private String destination;
     private String hostname;
     private String port;
+    private boolean enabled = true;
        
 
     public LiquidRelayEndpoint(String uri, LiquidRelayComponent component) {
@@ -65,7 +66,7 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
         
         
         
-        return new LiquidRelayProducer(this, transport, camelConverter);
+        return new LiquidRelayProducer(this, transport, camelConverter, enabled);
     }
 
     public boolean isSingleton() {
@@ -122,6 +123,20 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
 	public void setPort(String port) {
 		this.port = port;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
+
+
+	
+	
 
 	
 
