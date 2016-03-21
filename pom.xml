@@ -48,25 +48,7 @@
 						<version>2.14.1</version>
 					</dependency>
 				</dependencies>
-			</plugin>	
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>liquid</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<descriptor>src/main/assembly/zip-package.xml</descriptor>
-					<finalName>camel-interceptor</finalName>
-					<appendAssemblyId>false</appendAssemblyId>					
-				</configuration>
-			</plugin>		
+			</plugin>			
 		</plugins>
 	</build>
 

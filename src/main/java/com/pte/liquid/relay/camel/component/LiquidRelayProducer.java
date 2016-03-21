@@ -13,14 +13,16 @@
 //limitations under the License.
 package com.pte.liquid.relay.camel.component;
 
+import java.util.UUID;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
-import com.pte.liquid.relay.camel.util.LiquidRelayCamelUtil;
 import com.pte.liquid.relay.model.Message;
 
 /**
@@ -46,18 +48,18 @@ public class LiquidRelayProducer extends DefaultProducer {
     		if(enabled){
     			    		
 	        	Message preMsg = converter.convert(exchange);  
-	        	String correlationID = LiquidRelayCamelUtil.determineCorrelation(exchange);
-	        	String parentId = LiquidRelayCamelUtil.determineParent(exchange);
-	        	int order = LiquidRelayCamelUtil.determineOrder(exchange);
+	        	String correlationID = determineCorrelation(exchange);
+	        	String parentId = determineParent(exchange);
+	        	int order = determineOrder(exchange);
 	        	String messageID = preMsg.getId();
 	        	
-	        	LiquidRelayCamelUtil.setCorrelationID(correlationID, exchange);
+	        	setCorrelationID(correlationID, exchange);
 	        	preMsg.setCorrelationID(correlationID);
 	        	
-	        	LiquidRelayCamelUtil.setParentID(messageID, exchange);
+	        	setParentID(messageID, exchange);
 	        	preMsg.setParentID(parentId);
 	        	
-	        	LiquidRelayCamelUtil.setOrder(order, exchange);
+	        	setOrder(order, exchange);
 	        	preMsg.setOrder(order);	
 	        	
 	        	   	    	    	    	  	   
@@ -71,6 +73,51 @@ public class LiquidRelayProducer extends DefaultProducer {
 			//Empty by design
 		}
     }
+    
+
+	 private String determineCorrelation(Exchange exchange){
+			String correlationId = "";	
+			if(exchange!=null){
+				if(exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class)!=null){
+					correlationId = exchange.getIn().getHeader(Constants.CORRELATION_ID_PROPERTY_NAME, String.class);
+				} else {
+					correlationId = UUID.randomUUID().toString();
+				}
+			}	
+			return correlationId;
+		}
+		
+	 private int determineOrder(Exchange exchange){
+			int order = 0;	
+			if(exchange!=null){
+				if(exchange.getIn().getHeader(Constants.ORDER_PROPERTY_NAME, Integer.class)!=null){
+					order = exchange.getIn().getHeader(Constants.ORDER_PROPERTY_NAME, Integer.class);
+				}			
+			}	
+			return order;
+		}
+		
+	 private String determineParent(Exchange exchange){
+			String parentID = "";	
+			if(exchange!=null){
+				if(exchange.getIn().getHeader(Constants.PARENT_ID_PROPERTY_NAME, String.class)!=null){
+					parentID = exchange.getIn().getHeader(Constants.PARENT_ID_PROPERTY_NAME, String.class);
+				}			
+			}	
+			return parentID;
+		}
+		
+	 private void setCorrelationID(String correlationID, Exchange exchange){		
+			exchange.getIn().setHeader(Constants.CORRELATION_ID_PROPERTY_NAME, correlationID);		
+		}
+		
+	 private void setOrder(int order, Exchange exchange){		
+			exchange.getIn().setHeader(Constants.ORDER_PROPERTY_NAME, order + 1);		
+		}
+		
+	 private void setParentID(String parentID,Exchange exchange){		
+			exchange.getIn().setHeader(Constants.PARENT_ID_PROPERTY_NAME, parentID);		
+		}
     
    
 
