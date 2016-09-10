@@ -17,8 +17,6 @@ import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.pte.liquid.relay.Constants;
 import com.pte.liquid.relay.Converter;
@@ -29,7 +27,7 @@ import com.pte.liquid.relay.model.Message;
  * The LiquidRelay producer.
  */
 public class LiquidRelayProducer extends DefaultProducer {
-    private static final transient Logger LOG = LoggerFactory.getLogger(LiquidRelayProducer.class);
+
     private LiquidRelayEndpoint endpoint;
     private Transport transport;
     private Converter<Exchange> converter;
@@ -64,13 +62,9 @@ public class LiquidRelayProducer extends DefaultProducer {
 	        	
 	        	   	    	    	    	  	   
 	        	transport.send(preMsg);
-    		}else{
-    			if(log.isDebugEnabled()){
-    				log.debug("Skipping message because liquid is disabled");
-    			}
     		}
     	} catch (Exception e) {
-			//Empty by design
+    		transport.destroy();
 		}
     }
     

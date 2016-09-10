@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>com.pte.liquid.relay</groupId>
 		<artifactId>liquid-parent</artifactId>
-		<version>0.0.4</version>
+		<version>0.0.7</version>
 	</parent>
 	<scm>
 		<connection>scm:git:https://github.com/rjptegelaar/liquid-relay-camel</connection>
@@ -63,11 +63,15 @@
 			<artifactId>camel-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- LOGGING -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -79,27 +83,40 @@
 			<artifactId>log4j</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- SPRING -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
+			<artifactId>spring-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<scope>provided</scope>
+			<version>${spring.version}</version>
+		</dependency>
 
 		<!-- LIQUID -->
-
 		<dependency>
 			<groupId>com.pte.liquid.relay</groupId>
 			<artifactId>RelayApi</artifactId>
-			<version>0.1.5</version>
+			<version>0.1.8</version>
 		</dependency>
 		<dependency>
 		  <groupId>com.pte.liquid.relay</groupId>
 		  <artifactId>liquid-relay-camel-converter</artifactId>
-		  <version>0.0.2</version>
+		  <version>0.0.4</version>
 		</dependency>
 	</dependencies>
 
