@@ -30,4 +30,5 @@ public class LiquidRelayComponent extends DefaultComponent {
         return endpoint;
     }    
     
+ 
 }

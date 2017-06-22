@@ -133,16 +133,5 @@ public class LiquidRelayEndpoint extends DefaultEndpoint{
 	}
 
 
-
-
-	
-	
-
-	
-
-
-
-    
-
     
 }
