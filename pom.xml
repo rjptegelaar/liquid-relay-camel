@@ -12,11 +12,12 @@
 		<url>https://github.com/rjptegelaar/liquid-relay-camel.git</url>
 		<tag>HEAD</tag>
 	</scm>
-<properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<gozirra.version>0.4.1</gozirra.version>
 		<gson.version>2.3</gson.version>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
 	<dependencies>
