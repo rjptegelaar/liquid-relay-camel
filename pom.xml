@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>liquid-relay-camel</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.4</version>
 	<name>liquid-relay-camel</name>
 	<url>https://github.com/rjptegelaar/liquid-relay-camel</url>
 	<scm>
 		<connection>scm:git:https://github.com/rjptegelaar/liquid-relay-camel</connection>
 		<developerConnection>scm:git:git@github.com:rjptegelaar/liquid-relay-camel</developerConnection>
 		<url>https://github.com/rjptegelaar/liquid-relay-camel.git</url>
-		<tag>HEAD</tag>
+		<tag>liquid-relay-camel-1.0.4</tag>
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
