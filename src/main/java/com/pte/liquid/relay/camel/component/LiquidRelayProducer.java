@@ -13,10 +13,10 @@
 //limitations under the License.
 package com.pte.liquid.relay.camel.component;
 
+import java.util.logging.Logger;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
@@ -27,7 +27,7 @@ import com.pte.liquid.relay.model.Message;
  * The Liquid producer.
  */
 public class LiquidRelayProducer extends DefaultProducer {
-    private static final Logger LOG = LoggerFactory.getLogger(LiquidRelayProducer.class);
+    private static final Logger LOG = Logger.getLogger("LiquidRelayProducer");
     private LiquidRelayEndpoint endpoint;
     private Converter<Exchange> converter;
     private Transport transport;
