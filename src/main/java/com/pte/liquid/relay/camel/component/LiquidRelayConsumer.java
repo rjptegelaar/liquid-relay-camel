@@ -1,4 +1,4 @@
-//Copyright 2015 Paul Tegelaar
+//Copyright 2017 Paul Tegelaar
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@ package com.pte.liquid.relay.camel.component;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 
+/**
+ * The Liquid consumer.
+ */
 public class LiquidRelayConsumer extends DefaultConsumer {
     private final LiquidRelayEndpoint endpoint;
 
@@ -25,5 +28,4 @@ public class LiquidRelayConsumer extends DefaultConsumer {
     }
 
    
-    
 }

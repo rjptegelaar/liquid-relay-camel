@@ -1,4 +1,4 @@
-//Copyright 2015 Paul Tegelaar
+//Copyright 2017 Paul Tegelaar
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@ package com.pte.liquid.relay.camel.component;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Transport;
@@ -22,27 +24,33 @@ import com.pte.liquid.relay.camel.util.LiquidRelayCamelUtil;
 import com.pte.liquid.relay.model.Message;
 
 /**
- * The LiquidRelay producer.
+ * The Liquid producer.
  */
 public class LiquidRelayProducer extends DefaultProducer {
-
+    private static final Logger LOG = LoggerFactory.getLogger(LiquidRelayProducer.class);
     private LiquidRelayEndpoint endpoint;
-    private Transport transport;
     private Converter<Exchange> converter;
+    private Transport transport;
     private boolean enabled;
-    
-    public LiquidRelayProducer(LiquidRelayEndpoint endpoint, Transport transport, Converter<Exchange> converter, boolean enabled) {
-        super(endpoint);               
-        this.converter = converter;
-        this.transport = transport;
-        this.endpoint = endpoint;
-        this.enabled = enabled;
-    }
 
+    public LiquidRelayProducer(LiquidRelayEndpoint endpoint) {        	
+        super(endpoint);
+        
+        LOG.info("Created Liquid interceptor queue size: " + endpoint.getQueueSize() + ", threshold: " + endpoint.getQueueThreshold());
+        
+        this.converter = endpoint.getConverter();
+        this.transport = endpoint.getAsyncTransport();
+        this.enabled = endpoint.isEnabled();
+        
+        
+        this.endpoint = endpoint;
+    }
+    
+    
     public void process(Exchange exchange) throws Exception {
     	try{
     		if(enabled){
-    			    		
+    			    			    			    
 	        	Message preMsg = converter.convert(exchange);  
 	        	String correlationID = LiquidRelayCamelUtil.determineCorrelation(exchange);
 	        	String parentId = LiquidRelayCamelUtil.determineParent(exchange);
@@ -63,12 +71,9 @@ public class LiquidRelayProducer extends DefaultProducer {
     		}
     	} catch (Exception e) {
     		transport.destroy();
-		}
+		}    
     }
     
-
-
     
-   
 
 }

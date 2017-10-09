@@ -1,4 +1,4 @@
-//Copyright 2015 Paul Tegelaar
+//Copyright 2017 Paul Tegelaar
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -15,20 +15,28 @@ package com.pte.liquid.relay.camel.component;
 
 import java.util.Map;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.impl.UriEndpointComponent;
 
 /**
- * Represents the component that manages {@link LiquidRelayEndpoint}.
+ * Represents the component that manages {@link LiquidEndpoint}.
  */
-public class LiquidRelayComponent extends DefaultComponent {
-	
-    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        LiquidRelayEndpoint endpoint = new LiquidRelayEndpoint(uri, this);        
-        setProperties(endpoint, parameters);  
-        
-        return endpoint;
-    }    
+public class LiquidRelayComponent extends UriEndpointComponent {
     
- 
+    public LiquidRelayComponent() {
+        super(LiquidRelayEndpoint.class);
+    }
+
+    public LiquidRelayComponent(CamelContext context) {
+        super(context, LiquidRelayEndpoint.class);
+    }
+
+    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+        Endpoint endpoint = new LiquidRelayEndpoint(uri, this);
+        setProperties(endpoint, parameters);
+        return endpoint;
+    }
+    
+    
 }
